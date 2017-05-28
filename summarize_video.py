@@ -123,5 +123,5 @@ if __name__ == "__main__":
         # arg2 = localisation of CSV file
         ############################################
 
-        video = Summarization(sys.argv[3], int(sys.argv[2]))
+        video = Summarization(sys.argv[2], int(sys.argv[1]))
         video.prepare_recipe()
