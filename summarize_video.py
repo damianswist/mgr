@@ -80,6 +80,7 @@ class Summarization(object):
             }
             for shot in shots_data]
         sorted_shots = list()
+        print(shots_data)
         sorted_shots.append(calculated_data[0])
         calculated_data = sorted(calculated_data[1:], key=itemgetter('coefficient'))[::-1]
         sorted_shots += calculated_data
@@ -112,11 +113,11 @@ class Summarization(object):
 
 
 if __name__ == "__main__":
-    video = Summarization('YswnulN_q0w', 60)
-    video.prepare_recipe()
+
 
     if len(sys.argv) < 3:
-        print("Incorrect arguments")
+        video = Summarization('YswnulN_q0w', 60)
+        video.prepare_recipe()
     elif len(sys.argv == 3):
 
         ############################################
