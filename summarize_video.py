@@ -6,9 +6,10 @@ from operator import itemgetter
 
 
 class Summarization(object):
-    def __init__(self, video_id, summarization_time):
+    def __init__(self, video_id, summarization_time, fps=25):
         self.video_id = video_id
         self.summarization_time = summarization_time
+        self.fps = fps
 
     def prepare_recipe(self):
         data = self.get_data_from_database()
@@ -85,7 +86,7 @@ class Summarization(object):
         return sorted_shots
 
     def choose_most_important_shots(self, sorted_data):
-        max_number_of_frames = self.summarization_time * 25  # 25 frames per second
+        max_number_of_frames = self.summarization_time * self.fps  # 25 frames per second
 
         first_shot = sorted_data[0]['frames_range'].replace(" ", "").split(',')
         number_of_selected_frames = int(first_shot[1]) - int(first_shot[0]) + 1
@@ -116,7 +117,7 @@ if __name__ == "__main__":
 
     if len(sys.argv) < 3:
         print("Incorrect arguments")
-    else:
+    elif len(sys.argv == 3):
 
         ############################################
         # arg1 = time in [s]
@@ -124,4 +125,12 @@ if __name__ == "__main__":
         ############################################
 
         video = Summarization(sys.argv[2], int(sys.argv[1]))
+        video.prepare_recipe()
+    else:
+        ############################################
+        # arg1 = time in [s]
+        # arg2 = localisation of CSV file
+        ############################################
+
+        video = Summarization(sys.argv[2], int(sys.argv[1]), int(sys.argv[3]))
         video.prepare_recipe()
