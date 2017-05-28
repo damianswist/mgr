@@ -1,14 +1,14 @@
-import pymysql
-pymysql.install_as_MySQLdb()
-import MySQLdb
+import pymysql as MySQLdb
+# pymysql.install_as_MySQLdb()
+# import MySQLdb
 
 
 class DatabaseHandler:
 
     def __init__(self):
         self.hostname = "pbz.kt.agh.edu.pl"
-        self.username = "kozbial"
-        self.psd = "6J1bWMSIYe7CDsIX"
+        self.username = "amis"
+        self.psd = "OtiBFLkdXjDWatHL"
         self.dbname = "kozbial"
 
         self.db = MySQLdb.connect(self.hostname, self.username, self.psd, self.dbname)

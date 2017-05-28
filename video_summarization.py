@@ -3,6 +3,8 @@ import sys
 
 from operator import itemgetter
 
+from DatabaseHandler import DatabaseHandler
+
 
 class Video(object):
     def __init__(self):
@@ -129,6 +131,19 @@ class Video(object):
 if __name__ == "__main__":
     if len(sys.argv) < 4:
         print("Incorrect arguments")
+
+        print("Connecting")
+        db = DatabaseHandler()
+        print("Connected")
+
+        print("creating query")
+        query = "SELECT * FROM kozbial.frames WHERE video_id='YswnulN_q0w'"
+        # db.insertItems(query)
+        results = db.print(query)
+        print("printing results")
+        print(results)
+
+
     else:
 
         ############################################
