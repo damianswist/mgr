@@ -1,3 +1,5 @@
+import sys
+
 from DatabaseHandler import DatabaseHandler
 
 from operator import itemgetter
@@ -111,3 +113,15 @@ class Summarization(object):
 if __name__ == "__main__":
     video = Summarization('YswnulN_q0w', 60)
     video.prepare_recipe()
+
+    if len(sys.argv) < 3:
+        print("Incorrect arguments")
+    else:
+
+        ############################################
+        # arg1 = time in [s]
+        # arg2 = localisation of CSV file
+        ############################################
+
+        video = Summarization(sys.argv[3], int(sys.argv[2]))
+        video.prepare_recipe(sys.argv[1], int(sys.argv[2]), sys.argv[3])
