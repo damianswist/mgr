@@ -5,8 +5,7 @@ from VideoSummarizationHandler.VideoSummarizationHandler import VideoSummarizati
 if __name__ == "__main__":
 
     if len(sys.argv) < 3:
-        video = VideoSummarizationHandler('YswnulN_q0w', 60)
-        video.prepare_recipe()
+       print("Error: Not enough arguments")
     elif len(sys.argv == 3):
 
         ############################################
@@ -15,13 +14,13 @@ if __name__ == "__main__":
         ############################################
 
         video = VideoSummarizationHandler(sys.argv[2], int(sys.argv[1]))
-        video.prepare_recipe()
-    else:
+        video.prepare_random_summarization_recipe()
+    elif len(sys.argv == 4):
         ############################################
         # arg1 = time in [s]
         # arg2 = video id
-        # arg3 = fps rate
+        # arg3 fps rate
         ############################################
 
         video = VideoSummarizationHandler(sys.argv[2], int(sys.argv[1]), int(sys.argv[3]))
-        video.prepare_recipe()
+        video.prepare_random_summarization_recipe()

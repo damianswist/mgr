@@ -1,4 +1,5 @@
 import sys
+import random
 
 
 from operator import itemgetter
@@ -82,7 +83,6 @@ class VideoSummarizationHandler(object):
             }
             for shot in shots_data]
         sorted_shots = list()
-        print(shots_data)
         sorted_shots.append(calculated_data[0])
         calculated_data = sorted(calculated_data[1:], key=itemgetter('coefficient'))[::-1]
         sorted_shots += calculated_data
@@ -113,27 +113,35 @@ class VideoSummarizationHandler(object):
         [file.write(shot['frames_range'] + "\n") for shot in data]
         file.close()
 
+    def prepare_random_summarization_recipe(self):
+        data = self.get_data_from_database()
+        data = self.prep_shots_data(data)
+        data = self.sort_shots_randomly(data)
+        data = self.choose_most_important_shots(data)
+        data = self.sort_shots_based_on_shot_number(data)
+        self.prepare_txt_file_with_recipe(data)
+        return data
+
+    def sort_shots_randomly(self, shots_data):
+        calculated_data = [
+            {
+                'shot_number': shot['shot_number'],
+                'frames_range': shot['frames_range'],
+            }
+            for shot in shots_data]
+
+        sorted_shots = list()
+
+        shots_amount = len(calculated_data)
+        for x in range(shots_amount):
+            choice = random.choice(calculated_data)
+            sorted_shots.append(choice)
+            calculated_data.remove(choice)
+
+        return sorted_shots
+
 
 if __name__ == "__main__":
 
-
-    if len(sys.argv) < 3:
-        video = VideoSummarizationHandler('YswnulN_q0w', 60)
-        video.prepare_recipe()
-    elif len(sys.argv == 3):
-
-        ############################################
-        # arg1 = time in [s]
-        # arg2 = localisation of CSV file
-        ############################################
-
-        video = VideoSummarizationHandler(sys.argv[2], int(sys.argv[1]))
-        video.prepare_recipe()
-    else:
-        ############################################
-        # arg1 = time in [s]
-        # arg2 = localisation of CSV file
-        ############################################
-
-        video = VideoSummarizationHandler(sys.argv[2], int(sys.argv[1]), int(sys.argv[3]))
-        video.prepare_recipe()
+    video = VideoSummarizationHandler('YswnulN_q0w', 60)
+    video.prepare_random_summarization_recipe()
