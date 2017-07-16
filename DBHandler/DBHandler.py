@@ -46,10 +46,17 @@ class DBHandler(object):
         return results
 
     def get_selected_video_data(self, video_id):
-        query = "SELECT * FROM kozbial.frames WHERE video_id='{0}'".format(self.video_id)
+        query = "SELECT * FROM kozbial.frames WHERE video_id='{0}'".format(video_id)
         self.execute_query(query)
         results = self.get_data()
         return results
+
+    def get_video_last_shot_frames_numbers(self, video_id):
+        query = "SELECT * FROM kozbial.frames_sbd WHERE video_id ='{0}'".format(video_id)
+        self.execute_query(query)
+        results = self.get_data()
+        last_frames = [frame[1] for frame in results]
+        return last_frames
 
 if __name__ == "__main__":
     print("program start")
