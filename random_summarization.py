@@ -6,7 +6,7 @@ if __name__ == "__main__":
 
     if len(sys.argv) < 3:
        print("Error: Not enough arguments")
-    elif len(sys.argv == 3):
+    elif len(sys.argv) == 3:
 
         ############################################
         # arg1 = time in [s]
@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
         video = VideoSummarizationHandler(sys.argv[2], int(sys.argv[1]))
         video.prepare_random_summarization_recipe()
-    elif len(sys.argv == 4):
+    elif len(sys.argv) == 4:
         ############################################
         # arg1 = time in [s]
         # arg2 = video id
