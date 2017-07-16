@@ -1,8 +1,9 @@
 import sys
 
-from DBHandler import DBHandler
 
 from operator import itemgetter
+
+from DBHandler.DBHandler import DBHandler
 
 
 class VideoSummarizationHandler(object):
@@ -23,12 +24,14 @@ class VideoSummarizationHandler(object):
 
     def get_data_from_database(self):
         db = DBHandler()
+        db.connect()
         results = db.get_selected_video_data(self.video_id)
         db.close_connection()
         return results
 
     def get_last_shot_frames_numbers(self):
         db = DBHandler()
+        db.connect()
         last_frames = db.get_video_last_shot_frames_numbers(self.video_id)
         db.close_connection()
         return last_frames

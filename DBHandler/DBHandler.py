@@ -13,7 +13,6 @@ class DBHandler(object):
         self.cursor = None
 
     def connect(self):
-        print("Connecting")
         try:
             self.conn = pymysql.connect(host=self.host, port=self.port, user=self.user,
                                         passwd=self.passwd, db=self.db)
@@ -22,12 +21,10 @@ class DBHandler(object):
             print("Error: can't connect to database")
 
     def close_connection(self):
-        print("Closing connection")
         self.cursor.close()
         self.conn.close()
 
     def execute_query(self, query):
-        print("executing query")
         try:
             self.cursor = self.conn.cursor()
             self.cursor.execute(query)
@@ -36,7 +33,6 @@ class DBHandler(object):
             print("Error: can't execute query")
 
     def get_data(self):
-        print("Fetching data")
         results = None
         try:
             results = self.cursor.fetchall()
