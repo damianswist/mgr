@@ -6,6 +6,9 @@ if __name__ == "__main__":
 
     if len(sys.argv) < 3:
        print("Error: Not enough arguments")
+
+       # video = VideoSummarizationHandler('1H7Y_vcI_6c', 60)
+       # video.prepare_random_summarization_recipe()
     elif len(sys.argv) == 3:
 
         ############################################

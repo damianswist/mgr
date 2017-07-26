@@ -74,6 +74,30 @@ class VideoSummarizationHandler(object):
 
         return shots_data
 
+    def prep_shots_data_for_random_summarization(self, frames_data):
+        shots_data = []
+        last_frames = self.get_last_shot_frames_numbers()
+
+        shot_number = 0
+
+        first_frame_number = 0
+        last_frame_number = 0
+
+        for shot_end in last_frames:
+            first_frame_number = last_frame_number + 1
+            last_frame_number = shot_end
+
+            frames_number = last_frame_number - first_frame_number
+            shot = {
+                'shot_number': shot_number,
+                'frames_range': "{0}, {1}".format(first_frame_number, last_frame_number),
+            }
+            shots_data.append(shot)
+
+            shot_number += 1
+
+        return shots_data
+
     def sort_shots_depends_on_sa_and_ta_coefficients(self, shots_data):
         calculated_data = [
             {
@@ -115,7 +139,7 @@ class VideoSummarizationHandler(object):
 
     def prepare_random_summarization_recipe(self):
         data = self.get_data_from_database()
-        data = self.prep_shots_data(data)
+        data = self.prep_shots_data_for_random_summarization(data)
         data = self.sort_shots_randomly(data)
         data = self.choose_most_important_shots(data)
         data = self.sort_shots_based_on_shot_number(data)
@@ -140,8 +164,17 @@ class VideoSummarizationHandler(object):
 
         return sorted_shots
 
+    def prepare_A_category_summarization(self):
+        data = self.get_data_from_database()
+        data = self.prep_shots_data(data)
+        data = self.sort_shots_depends_on_sa_and_ta_coefficients(data)
+        data = self.choose_most_important_shots(data)
+        data = self.sort_shots_based_on_shot_number(data)
+        self.prepare_txt_file_with_recipe(data)
+
 
 if __name__ == "__main__":
 
     video = VideoSummarizationHandler('YswnulN_q0w', 60)
-    video.prepare_random_summarization_recipe()
+    # video.prepare_random_summarization_recipe()
+    video.prepare_A_category_summarization()
