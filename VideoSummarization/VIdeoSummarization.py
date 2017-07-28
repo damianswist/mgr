@@ -11,10 +11,10 @@ class VideoSummarization(object):
         self.summarization_time = summarization_time
         self.fps = fps
 
-    def prepare_summarization_recipe(self):
-        ''' Prepares recipe of summarization (txt file witch contains selected frames numbers)'''
-        data = self.get_data_from_database()
-        data = self.prepare_shots_data(data)
+    # def prepare_summarization_recipe(self):
+    #     ''' Prepares recipe of summarization (txt file witch contains selected frames numbers)'''
+    #     data = self.get_data_from_database()
+    #     data = self.prepare_shots_data(data)
 
     def get_data_from_database(self):
         ''' Downloads data for every frame of video from AMIS database
