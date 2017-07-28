@@ -1,3 +1,5 @@
+from operator import itemgetter
+
 from DBHandler.DBHandler import DBHandler
 
 
@@ -13,7 +15,6 @@ class VideoSummarization(object):
         ''' Prepares recipe of summarization (txt file witch contains selected frames numbers)'''
         data = self.get_data_from_database()
         data = self.prepare_shots_data(data)
-        print(data)
 
     def get_data_from_database(self):
         ''' Downloads data for every frame of video from AMIS database
@@ -36,6 +37,29 @@ class VideoSummarization(object):
         return last_frames
 
     def prepare_shots_data(self, frames_data):
+        '''
+        :param frames_data: tuple of tuples, where everyone contains data for single frame
+        :return Dict in below format:
+                {
+                    'shot_number': value,
+                    'frames_range': value
+                    'blockiness': value,
+                    'SA': value,
+                    'letterbox': value,
+                    'pillarbox': value,
+                    'blockloss': value,
+                    'blur': value,
+                    'TA': value,
+                    'blackout': value,
+                    'freezing': value,
+                    'exposure_bri': value,
+                    'contrast': value,
+                    'interlace': value,
+                    'noise': value,
+                    'slice': value,
+                    'flickering': value,
+                }
+        '''
         shots_data = list()
         last_frames = self.get_last_frame_of_shots_numbers()
 
@@ -87,75 +111,205 @@ class VideoSummarization(object):
             last_frame_number = shot_end
 
             first_frame_of_shot = True
-            for frame_number in range(first_frame_number, last_frame_number):
-                if not first_frame_of_shot:
-                    # TA depends on previous frame, so if it is from another shot it should be omitted
-                    ta += float(frames_data[frame_number][10])
+            # There is problem with database, and for some records there sbd data don't match
+            counter = 0
+            try:
+                for frame_number in range(first_frame_number, last_frame_number):
+                    if not first_frame_of_shot:
+                        # TA depends on previous frame, so if it is from another shot it should be omitted
+                        ta += float(frames_data[frame_number][10])
+                    blockiness += float(frames_data[frame_number][4])
+                    sa += float(frames_data[frame_number][5])
+                    letterbox += float(frames_data[frame_number][6])
+                    pillarbox += float(frames_data[frame_number][7])
+                    blockloss += float(frames_data[frame_number][8])
+                    blur += float(frames_data[frame_number][9])
+                    blackout += float(frames_data[frame_number][11])
+                    freezing += float(frames_data[frame_number][12])
+                    exposure_bri += float(frames_data[frame_number][13])
+                    contrast += float(frames_data[frame_number][14])
+                    interlace += float(frames_data[frame_number][15])
+                    noise += float(frames_data[frame_number][16])
+                    slice += float(frames_data[frame_number][17])
+                    flickering += float(frames_data[frame_number][18])
 
-                blockiness += float(frames_data[frame_number][4])
-                sa += float(frames_data[frame_number][5])
-                letterbox += float(frames_data[frame_number][6])
-                pillarbox += float(frames_data[frame_number][7])
-                blockloss += float(frames_data[frame_number][8])
-                blur += float(frames_data[frame_number][9])
-                blackout += float(frames_data[frame_number][11])
-                freezing += float(frames_data[frame_number][12])
-                exposure_bri += float(frames_data[frame_number][13])
-                contrast += float(frames_data[frame_number][14])
-                interlace += float(frames_data[frame_number][15])
-                noise += float(frames_data[frame_number][16])
-                slice += float(frames_data[frame_number][17])
-                flickering += float(frames_data[frame_number][18])
+                    first_frame_of_shot = False
 
-                first_frame_of_shot = False
+                frames_number = last_frame_number - first_frame_number
 
-            frames_number = last_frame_number - first_frame_number
-            shot = {
-                'shot_number': shot_number,
-                'frames_range': "{0}, {1}".format(first_frame_number, last_frame_number),
-                'blockiness': float(blockiness / frames_number),
-                'SA': float(sa / frames_number),
-                'letterbox': float(letterbox / frames_number),
-                'pillarbox': float(pillarbox / frames_number),
-                'blockloss': float(blockloss / frames_number),
-                'blur': float(blur / frames_number),
-                'TA': float(ta / (frames_number - 1)),
-                'blackout': float(blackout / frames_number),
-                'freezing': float(freezing / frames_number),
-                'exposure_bri': float(exposure_bri / frames_number),
-                'contrast': float(contrast / frames_number),
-                'interlace': float(interlace / frames_number),
-                'noise': float(noise / frames_number),
-                'slice': float(slice / frames_number),
-                'flickering': float(flickering / frames_number),
-            }
-            shots_data.append(shot)
+                shot = {
+                    'shot_number': shot_number,
+                    'frames_range': "{0}, {1}".format(first_frame_number, last_frame_number),
+                    'blockiness': float(blockiness / frames_number),
+                    'SA': float(sa / frames_number),
+                    'letterbox': float(letterbox / frames_number),
+                    'pillarbox': float(pillarbox / frames_number),
+                    'blockloss': float(blockloss / frames_number),
+                    'blur': float(blur / frames_number),
+                    'TA': float(ta / (frames_number - 1)),
+                    'blackout': float(blackout / frames_number),
+                    'freezing': float(freezing / frames_number),
+                    'exposure_bri': float(exposure_bri / frames_number),
+                    'contrast': float(contrast / frames_number),
+                    'interlace': float(interlace / frames_number),
+                    'noise': float(noise / frames_number),
+                    'slice': float(slice / frames_number),
+                    'flickering': float(flickering / frames_number),
+                }
+                shots_data.append(shot)
 
-            blockiness = 0.0
-            sa = 0.0
-            letterbox = 0.0
-            pillarbox = 0.0
-            blockloss = 0.0
-            blur = 0.0
-            ta = 0.0
-            blackout = 0.0
-            freezing = 0.0
-            exposure_bri = 0.0
-            contrast = 0.0
-            interlace = 0.0
-            noise = 0.0
-            slice = 0.0
-            flickering = 0.0
+                blockiness = 0.0
+                sa = 0.0
+                letterbox = 0.0
+                pillarbox = 0.0
+                blockloss = 0.0
+                blur = 0.0
+                ta = 0.0
+                blackout = 0.0
+                freezing = 0.0
+                exposure_bri = 0.0
+                contrast = 0.0
+                interlace = 0.0
+                noise = 0.0
+                slice = 0.0
+                flickering = 0.0
 
-            shot_number += 1
+                shot_number += 1
+
+            except Exception as e:
+                print(e)
+                print("ERROR: database tables are incompatible ")
+                return shots_data
 
         return shots_data
 
+    def prepare_minimized_shots_data(self):
+        '''
+        Prepares list of dictionaries with shot number and its frames range
+        :return: List of dicts in below format
+            {
+                'shot_number': shot_number,
+                'frames_range': "first_frame_number, last_frame_number,
+            }
+        '''
+        shots_data = []
+        last_frames = self.get_last_frame_of_shots_numbers()
+
+        shot_number = 0
+        last_frame_number = 0
+
+        for shot_end in last_frames:
+            first_frame_number = last_frame_number + 1
+            last_frame_number = shot_end
+
+            shot = {
+                'shot_number': shot_number,
+                'frames_range': "{0}, {1}".format(first_frame_number, last_frame_number),
+            }
+            shots_data.append(shot)
+            shot_number += 1
+        return shots_data
+
+    def sort_shots_based_on_shot_number(self, shots):
+        '''
+        Sort ascending list of dicts with shots data depends on shot number
+        :param shots: Dict in below format:
+                {
+                    'shot_number': value,
+                    'frames_range': value
+                    'blockiness': value,
+                    'SA': value,
+                    'letterbox': value,
+                    'pillarbox': value,
+                    'blockloss': value,
+                    'blur': value,
+                    'TA': value,
+                    'blackout': value,
+                    'freezing': value,
+                    'exposure_bri': value,
+                    'contrast': value,
+                    'interlace': value,
+                    'noise': value,
+                    'slice': value,
+                    'flickering': value,
+                }
+        :return: Dict in below format:
+                {
+                    'shot_number': value,
+                    'frames_range': value
+                    'blockiness': value,
+                    'SA': value,
+                    'letterbox': value,
+                    'pillarbox': value,
+                    'blockloss': value,
+                    'blur': value,
+                    'TA': value,
+                    'blackout': value,
+                    'freezing': value,
+                    'exposure_bri': value,
+                    'contrast': value,
+                    'interlace': value,
+                    'noise': value,
+                    'slice': value,
+                    'flickering': value,
+                }
+        '''
+        return sorted(shots, key=itemgetter('shot_number'))
+
+    def prepare_summarization_recipe(self, data):
+        '''
+        Creates txt file with summarization recipe
+        :param data: List of dicts in below format:
+                {
+                    'shot_number': value,
+                    'frames_range': value
+                }
+        :return: TXT file in below format (where every line contains selected shots frames range:
+            729, 843
+            1892, 2007
+            2008, 2159
+            2377, 2696
+        '''
+        file = open('{0}.txt'.format(self.video_id), 'w')
+        [file.write(shot['frames_range'] + "\n") for shot in data]
+        file.close()
+
+    def select_number_of_shots_depending_on_expected_video_time(self, sorted_data):
+        '''
+        Selects shots depending on expected video time, for example for 60 [s] video summarization there will be
+        fps * 60 selected frames
+        :param sorted_data: List of dicts in below format:
+                {
+                    'shot_number': value,
+                    'frames_range': value
+                }
+        :return: List of dicts in below format:
+                {
+                    'shot_number': value,
+                    'frames_range': value
+                }
+        '''
+        max_number_of_frames = self.summarization_time * self.fps
+
+        first_shot = sorted_data[0]['frames_range'].replace(" ", "").split(',')
+        number_of_selected_frames = int(first_shot[1]) - int(first_shot[0]) + 1
+
+        selected_shots = list()
+        selected_shots.append(sorted_data[0])
+
+        for shot in sorted_data[1:]:
+            tmp = shot['frames_range'].replace(" ", "").split(',')
+            number_of_frames = int(tmp[1]) - int(tmp[0]) + 1
+            if (number_of_selected_frames + number_of_frames) <= max_number_of_frames:
+                selected_shots.append(shot)
+                number_of_selected_frames += number_of_frames
+        return selected_shots
+
 
 if __name__ == "__main__":
-    vs1 = VideoSummarization('1H7Y_vcI_6c', 60)
-    # vs2 = VideoSummarization('YswnulN_q0w', 60)
+    # vs1 = VideoSummarization('1H7Y_vcI_6c', 60)
+    vs2 = VideoSummarization('YswnulN_q0w', 60)
 
-    vs1.prepare_summarization_recipe()
-    # vs2.prepare_summarization_recipe()
+    # vs1.prepare_summarization_recipe()
+    vs2.prepare_summarization_recipe()
 
