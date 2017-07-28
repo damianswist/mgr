@@ -47,7 +47,7 @@ class DBHandler(object):
         results = self.get_data()
         return results
 
-    def get_video_last_shot_frames_numbers(self, video_id):
+    def get_video_last_frame_of_shots_numbers(self, video_id):
         query = "SELECT * FROM kozbial.frames_sbd WHERE video_id ='{0}'".format(video_id)
         self.execute_query(query)
         results = self.get_data()
