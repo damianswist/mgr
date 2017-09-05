@@ -46,6 +46,6 @@ class TextBasedVideoSummarization(VideoSummarization):
 
 
 if __name__ == "__main__":
-    file = "E:\\video_summarization\\VideoSummarization\\Euronews_fra_AVmedium_gmh0mX96jiM_Egypte--ces-femmes-arabes-qui-ouvrent-la-voie-pour-lgalit-dans-le-travail_1.spos_cortex_-p30_ultra.txt_TRA-AUTO_SEG-HMM-POS_times.txt"
+    file = "C:\\Users\\Damian\\Desktop\\mgr\\eval_marroc\\summaries\\France24_fra_AVhd720_09Ytjo1cmSE_Assassinat-de-Thomas-Sankara--La-dpouille-prsume-crible-de-balles---BURKINA-FASO_1.spos_cortex_-p30_ultra.txt_TRA-AUTO_SEG-HMM-POS_times.txt"
     vs = TextBasedVideoSummarization(file, 60)
     vs.summarize_video()

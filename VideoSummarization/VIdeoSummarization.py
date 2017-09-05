@@ -18,7 +18,7 @@ class VideoSummarization(object):
 
     def get_data_from_database(self):
         ''' Downloads data for every frame of video from AMIS database
-            RETURNS tuple of tuples
+            RETURNS list of tuples
             eg. (18332870, 'YswnulN_q0w', 1, 0, '0.94962', '60.08957', '0.00000', '0.00000', '0.17857', '5.726',
              '21.77585', '0', '0', '136', '62.39975', '0.00537', '0.0000', '2.494', '-1.00000') '''
         db = DBHandler()
@@ -38,7 +38,7 @@ class VideoSummarization(object):
 
     def prepare_shots_data(self, frames_data):
         '''
-        :param frames_data: tuple of tuples, where everyone contains data for single frame
+        :param frames_data: list of tuples, where everyone contains data for single frame
         :return Dict in below format:
                 {
                     'shot_number': value,

@@ -7,7 +7,7 @@ if __name__ == "__main__":
     if len(sys.argv) < 3:
         video = VideoSummarizationHandler('YswnulN_q0w', 60)
         video.prepare_recipe()
-    elif len(sys.argv == 3):
+    elif len(sys.argv) == 3:
 
         ############################################
         # arg1 = time in [s]

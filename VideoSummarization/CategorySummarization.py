@@ -59,5 +59,5 @@ class CategorySummarization(VideoSummarization):
         return sorted_shots
 
 if __name__ == "__main__":
-    vs = CategorySummarization('YswnulN_q0w', 60)
+    vs = CategorySummarization('09Ytjo1cmSE', 60)
     vs.summarize_A_category_video()
