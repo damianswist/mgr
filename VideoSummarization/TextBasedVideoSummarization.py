@@ -41,11 +41,12 @@ class TextBasedVideoSummarization(VideoSummarization):
 
     def get_video_id(self):
         # ToDo Rework that
-        video_id = file.split("_")[4]
+        # video_id = file.split("_")[4]
+        video_id = "zUVs6NAKzC0"
         return video_id
 
 
 if __name__ == "__main__":
-    file = "C:\\Users\\Damian\\Desktop\\mgr\\eval_marroc\\summaries\\France24_fra_AVhd720_09Ytjo1cmSE_Assassinat-de-Thomas-Sankara--La-dpouille-prsume-crible-de-balles---BURKINA-FASO_1.spos_cortex_-p30_ultra.txt_TRA-AUTO_SEG-HMM-POS_times.txt"
+    file = "C:\\Users\\Damian\\Desktop\\mgr\\tmp_streszczenia\\english\\eval_en\\zUVs6NAKzC0\\zUVs6NAKzC0_summary.txt"
     vs = TextBasedVideoSummarization(file, 60)
     vs.summarize_video()
