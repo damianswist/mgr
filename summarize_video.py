@@ -1,5 +1,6 @@
 import sys
 
+from VideoSummarization.CategorySummarization import CategorySummarization
 from VideoSummarizationHandler.VideoSummarizationHandler import VideoSummarizationHandler
 
 if __name__ == "__main__":
@@ -14,8 +15,8 @@ if __name__ == "__main__":
         # arg2 = video id
         ############################################
 
-        video = VideoSummarizationHandler(sys.argv[2], int(sys.argv[1]))
-        video.prepare_recipe()
+        video = CategorySummarization(sys.argv[2], int(sys.argv[1]))
+        video.summarize_A_category_video()
     else:
         ############################################
         # arg1 = time in [s]
