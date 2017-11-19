@@ -1,3 +1,5 @@
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+
 from MachineLearning.LearningDataHandler import LearningDataHandler
 
 import pandas
@@ -10,9 +12,9 @@ from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
+
 
 
 class MachineLearningHandler(object):
@@ -44,7 +46,7 @@ class MachineLearningHandler(object):
         scatter_matrix(data_set)
         plt.show()
 
-    def do_magic(self, data_set):
+    def analyse_dataset(self, data_set):
         array = data_set.values
         X = array[:, 0:15]
         Y = array[:, 15]
@@ -93,6 +95,9 @@ class MachineLearningHandler(object):
         print("Classification result")
         print(classification_report(Y_validation, predictions))
 
+    def get_predictions(self, shots_data):
+        pass
+
 if __name__ == "__main__":
     handler = MachineLearningHandler()
     data_set = handler.load_learning_data("a")
@@ -103,4 +108,5 @@ if __name__ == "__main__":
     # handler.visualize_data(data_set)
     # handler.display_histograms(data_set)
     # handler.display_interactions_between_variables(data_set)  # ?????????????
-    handler.do_magic(data_set)
+    # handler.do_magic(data_set)
+    handler.analyse_dataset(data_set)

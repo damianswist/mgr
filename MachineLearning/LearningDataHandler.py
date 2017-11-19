@@ -14,11 +14,11 @@ class LearningDataHandler(object):
         self.video_id = video_id
         self.recipe = recipe
 
-    def fill_a_learning_data(self):
+    def fill_a_learning_data(self, grade):
         recipe = self.prepare_recipe_data()
         data = self.download_summarization_data(recipe)
         data = self.calculate_data(data, recipe)
-        self.fill_file_with_data(data, 8)
+        self.fill_file_with_data(data, grade)
         return data
 
     def fill_b_learning_data(self):
@@ -192,11 +192,11 @@ class LearningDataHandler(object):
                 outfile.write(line)  # non-empty line. Write it to output
 
 if __name__ == "__main__":
-    recipe = r"E:\video_summarization\MachineLearning\YswnulN_q0w.txt"
-    vid_id = "YswnulN_q0w"
+    recipe = r"E:\mgr_ml\Przepisy\qZjjSg4N-GI_random.txt"
+    vid_id = "qZjjSg4N-GI"
     handler = LearningDataHandler(vid_id, recipe)
     # handler.add_columns_to_file("a")
-    data = handler.fill_a_learning_data()
+    data = handler.fill_a_learning_data(4)
     # for d in data:
     #     print(d)
     # handler.add_columns_to_file("a")

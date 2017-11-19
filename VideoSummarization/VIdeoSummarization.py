@@ -1,4 +1,5 @@
 from operator import itemgetter
+import numpy
 
 from DBHandler.DBHandler import DBHandler
 
@@ -183,6 +184,125 @@ class VideoSummarization(object):
 
         return shots_data
 
+    def calculate_coeficients(self, shots_data):
+        results = dict()
+        tmp = [x['blockiness'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['blockiness'] = {
+            'min': 0.9,
+            'max': 1.01,
+            'mean': mean,
+            'std': std
+        }
+
+        tmp = [x['letterbox'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['letterbox'] = {
+            'mean': mean,
+            'std': std
+        }
+
+        tmp = [x['pillarbox'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['pillarbox'] = {
+            'mean': mean,
+            'std': std
+        }
+
+        tmp = [x['blockloss'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['blockloss'] = {
+            'min': 0,
+            'max': 5,
+            'mean': mean,
+            'std': std
+        }
+
+        tmp = [x['blackout'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['blackout'] = {
+            'mean': mean,
+            'std': std
+        }
+
+        tmp = [x['blur'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['blur'] = {
+            'min': 0,
+            'max': 5,
+            'mean': mean,
+            'std': std
+        }
+
+        tmp = [x['freezing'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['freezing'] = {
+            'mean': mean,
+            'std': std
+        }
+
+        tmp = [x['exposure_bri'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['exposure_bri'] = {
+            'min': 115,
+            'max': 125,
+            'mean': mean,
+            'std': std
+        }
+
+        tmp = [x['contrast'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['contrast'] = {
+            'min': 45,
+            'max': 55,
+            'mean': mean,
+            'std': std
+        }
+
+        tmp = [x['noise'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['noise'] = {
+            'min': 0,
+            'max': 3.5,
+            'mean': mean,
+            'std': std
+        }
+
+        tmp = [x['slice'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['slice'] = {
+            'mean': mean,
+            'std': std
+        }
+
+        tmp = [x['flickering'] for x in shots_data]
+        mean = numpy.mean(tmp, axis=0)
+        std = numpy.std(tmp, axis=0)
+        results['flickering'] = {
+            'mean': mean,
+            'std': std
+        }
+        return results
+
+    def calculate_standard_deviation(self, array):
+        results = numpy.std(array, axis=0)
+        return results
+
+    def calculate_mean(self, array):
+        results = numpy.mean(array, axis=0)
+        return results
+
     def prepare_minimized_shots_data(self):
         '''
         Prepares list of dictionaries with shot number and its frames range
@@ -311,5 +431,7 @@ if __name__ == "__main__":
     vs2 = VideoSummarization('YswnulN_q0w', 60)
 
     # vs1.prepare_summarization_recipe()
-    vs2.prepare_summarization_recipe()
-
+    # vs2.prepare_summarization_recipe()
+    array = [0.9143311659192829, 0.9018143065693429, 0.9103852678571442, 0.9213089285714283, 0.9365891191275182, 0.9302596721311475, 0.9368725624693787, 0.9450433241758243, 0.9354166533066138]
+    print(vs2.calculate_standard_deviation(array))
+    print(vs2.calculate_mean(array))
