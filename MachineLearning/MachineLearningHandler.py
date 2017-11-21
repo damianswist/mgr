@@ -16,10 +16,9 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 
 
-
 class MachineLearningHandler(object):
     def load_learning_data(self, video_category):
-        data_set = LearningDataHandler.get_learning_data("a")
+        data_set = LearningDataHandler.get_learning_data(video_category)
         return data_set
 
     def print_dimension(self, data_set):
@@ -78,13 +77,6 @@ class MachineLearningHandler(object):
             msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
             print(msg)
 
-        # fig = plt.figure()
-        # fig.suptitle('Algorithm Comparison')
-        # ax = fig.add_subplot(111)
-        # plt.boxplot(results)
-        # ax.set_xticklabels(names)
-        # plt.show()
-
         knn = KNeighborsClassifier()
         knn.fit(X_train, Y_train)
         predictions = knn.predict(X_validation)
@@ -96,11 +88,22 @@ class MachineLearningHandler(object):
         print(classification_report(Y_validation, predictions))
 
     def get_predictions(self, shots_data):
-        pass
+        data_set = self.load_learning_data("A")
+        array = data_set.values
+        values = array[:, 0:15]
+        grades = array[:, 15]
+
+        knn = KNeighborsClassifier()
+        knn.fit(values, grades)
+        predictions = knn.predict(shots_data)
+        return predictions
+
+
+
 
 if __name__ == "__main__":
     handler = MachineLearningHandler()
-    data_set = handler.load_learning_data("a")
+    data_set = handler.load_learning_data("A")
     # handler.print_dimension(data_set)
     # handler.show_data(data_set)
     # handler.print_learning_data_stats(data_set)
@@ -108,4 +111,6 @@ if __name__ == "__main__":
     # handler.visualize_data(data_set)
     # handler.display_histograms(data_set)
     # handler.display_interactions_between_variables(data_set)
-    handler.analyse_dataset(data_set)
+    # handler.analyse_dataset(data_set)
+    shots_data = []
+    handler.get_predictions(shots_data)

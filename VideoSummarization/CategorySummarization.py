@@ -160,7 +160,6 @@ class CategorySummarization(VideoSummarization):
             if not ((coef['slice']['mean'] - coef['slice']['std']) <= shot['slice'] <= (
                         coef['slice']['mean'] + coef['slice']['std'])):
                 coefficient *= 0.9
-
             if not ((coef['flickering']['mean'] - coef['flickering']['std']) <= shot['flickering'] <= (
                         coef['flickering']['mean'] + coef['flickering']['std'])):
                 coefficient *= 0.9

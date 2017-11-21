@@ -1,6 +1,8 @@
 import pymysql
 import configparser
 
+from Settings import Settings
+
 
 class DBHandler(object):
 
@@ -10,13 +12,19 @@ class DBHandler(object):
         self.cursor = None
 
     def initialize_database_credentials(self):
-        cfg = configparser.ConfigParser()
-        cfg.read('settings.cfg')
-        self.host = cfg.get('DBProperties', 'HOST')
-        self.user = cfg.get('DBProperties', 'USER')
-        self.passwd = cfg.get('DBProperties', 'PASSWORD')
-        self.db = cfg.get('DBProperties', 'DB')
-        self.port = cfg.getint('DBProperties', 'PORT')
+        # cfg = configparser.ConfigParser()
+        # cfg.read('settings.cfg')
+        # self.host = cfg.get('DBProperties', 'HOST')
+        # self.user = cfg.get('DBProperties', 'USER')
+        # self.passwd = cfg.get('DBProperties', 'PASSWORD')
+        # self.db = cfg.get('DBProperties', 'DB')
+        # self.port = cfg.getint('DBProperties', 'PORT')
+        cfg = Settings()
+        self.host = cfg.get_host()
+        self.user = cfg.get_user()
+        self.passwd = cfg.get_password()
+        self.db = cfg.get_db()
+        self.port = cfg.get_port()
 
     def connect(self):
         try:

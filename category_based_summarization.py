@@ -4,9 +4,6 @@ from VideoSummarization.CategorySummarization import CategorySummarization
 
 if __name__ == "__main__":
 
-    # if len(sys.argv) < 3:
-    #     video = CategorySummarization('YswnulN_q0w', 60)
-    #     video.prepare_recipe()
     if len(sys.argv) == 4:
 
         ############################################
@@ -19,7 +16,7 @@ if __name__ == "__main__":
         if sys.argv[3] == "A":
             video.summarize_A_category_video()
         elif sys.argv[3] == "B":
-            video.summarize_B_category_video()
+            video.summarize_A_category_video()
         elif sys.argv[3] == "C":
             video.summarize_C_category_video()
     elif len(sys.argv) == 5:
@@ -34,6 +31,6 @@ if __name__ == "__main__":
         if sys.argv[3] == "A":
             video.summarize_A_category_video()
         elif sys.argv[3] == "B":
-            video.summarize_B_category_video()
+            video.summarize_A_category_video()
         elif sys.argv[3] == "C":
             video.summarize_C_category_video()

@@ -2,9 +2,9 @@ from VideoSummarization.VIdeoSummarization import VideoSummarization
 
 
 class TextBasedVideoSummarization(VideoSummarization):
-    def __init__(self, file, summarization_time, fps=25):
+    def __init__(self, file, summarization_time, video_id, fps=25):
         self.file = file
-        video_id = self.get_video_id()
+        # self.video_id = video_id
         super(TextBasedVideoSummarization, self).__init__(video_id, summarization_time, fps)
 
     def summarize_video(self):
@@ -41,12 +41,12 @@ class TextBasedVideoSummarization(VideoSummarization):
 
     def get_video_id(self):
         # ToDo Rework that
-        # video_id = file.split("_")[4]
-        video_id = "zUVs6NAKzC0"
+        video_id = file.split("_")[4]
         return video_id
 
 
 if __name__ == "__main__":
     file = "C:\\Users\\Damian\\Desktop\\mgr\\tmp_streszczenia\\english\\eval_en\\zUVs6NAKzC0\\zUVs6NAKzC0_summary.txt"
-    vs = TextBasedVideoSummarization(file, 60)
+    video_id = 'zUVs6NAKzC0'
+    vs = TextBasedVideoSummarization(file, 60, video_id)
     vs.summarize_video()

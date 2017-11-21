@@ -4,6 +4,8 @@ from DBHandler.DBHandler import DBHandler
 import csv
 import fileinput
 
+from Settings import Settings
+
 
 class LearningDataHandler(object):
     def __init__(self, video_id, recipe):
@@ -178,10 +180,15 @@ class LearningDataHandler(object):
 
     @classmethod
     def get_learning_data(cls, vid_cat):
-        path = r"E:\video_summarization\MachineLearning\learning_data\learning_data_A.csv"
+        path = ''
+        settings = Settings()
+        if vid_cat == "A":
+            path = settings.get_a_learning_path()
+        elif vid_cat == "B":
+            path = settings.get_b_learning_path()
+        elif vid_cat == "C":
+            path = settings.get_c_learning_path()
         dataset = pandas.read_csv(path, sep="\t")
-        # print(dataset.head(20))
-        # print(dataset.shape)
         return dataset
 
     def delete_empty_lines(self, file):
@@ -196,7 +203,4 @@ if __name__ == "__main__":
     handler = LearningDataHandler(vid_id, recipe)
     # handler.add_columns_to_file("a")
     data = handler.fill_a_learning_data(4)
-    # for d in data:
-    #     print(d)
-    # handler.add_columns_to_file("a")
-    # handler.get_learning_data("a")
+
