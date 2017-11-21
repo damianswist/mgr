@@ -107,6 +107,5 @@ if __name__ == "__main__":
     # handler.print_grouped_by_score(data_set)
     # handler.visualize_data(data_set)
     # handler.display_histograms(data_set)
-    # handler.display_interactions_between_variables(data_set)  # ?????????????
-    # handler.do_magic(data_set)
+    # handler.display_interactions_between_variables(data_set)
     handler.analyse_dataset(data_set)

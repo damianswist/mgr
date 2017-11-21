@@ -1,16 +1,22 @@
 import pymysql
+import configparser
 
 
 class DBHandler(object):
 
     def __init__(self):
-        self.host = "pbz.kt.agh.edu.pl"
-        self.user = "amis"
-        self.passwd = "OtiBFLkdXjDWatHL"
-        self.db = "kozbial"
-        self.port = 3306
+        self.initialize_database_credentials()
         self.conn = None
         self.cursor = None
+
+    def initialize_database_credentials(self):
+        cfg = configparser.ConfigParser()
+        cfg.read('settings.cfg')
+        self.host = cfg.get('DBProperties', 'HOST')
+        self.user = cfg.get('DBProperties', 'USER')
+        self.passwd = cfg.get('DBProperties', 'PASSWORD')
+        self.db = cfg.get('DBProperties', 'DB')
+        self.port = cfg.getint('DBProperties', 'PORT')
 
     def connect(self):
         try:

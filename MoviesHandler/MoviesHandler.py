@@ -21,7 +21,6 @@ class MoviesHandler(object):
         # command = "ffmpeg -f image2 -r 25 -i test/frame%05d.jpg -vcodec libvpx  -y movie.webm"
         os.system(command)
 
-
     def getRecipe(self):
         with open('recipe.txt', 'r') as f:
             content = f.readlines()

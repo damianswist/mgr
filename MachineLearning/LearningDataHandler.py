@@ -21,11 +21,11 @@ class LearningDataHandler(object):
         self.fill_file_with_data(data, grade)
         return data
 
-    def fill_b_learning_data(self):
-        self.load_recipe()
-
-    def fill_c_learning_data(self):
-        self.load_recipe()
+    # def fill_b_learning_data(self):
+    #     self.load_recipe()
+    #
+    # def fill_c_learning_data(self):
+    #     self.load_recipe()
 
     def load_recipe(self):
         with open(self.recipe, 'r') as file:
@@ -152,7 +152,6 @@ class LearningDataHandler(object):
         with open(r"E:\video_summarization\MachineLearning\learning_data\learning_data_A.csv", 'a') as f:
             writer = csv.writer(f, delimiter='\t')
             writer.writerows(rows)
-
 
     def add_columns_to_file(self, vid_cat):
         columns = [

@@ -4,24 +4,36 @@ from VideoSummarization.CategorySummarization import CategorySummarization
 
 if __name__ == "__main__":
 
-    if len(sys.argv) < 3:
-        video = CategorySummarization('YswnulN_q0w', 60)
-        video.prepare_recipe()
-    elif len(sys.argv) == 3:
+    # if len(sys.argv) < 3:
+    #     video = CategorySummarization('YswnulN_q0w', 60)
+    #     video.prepare_recipe()
+    if len(sys.argv) == 4:
 
         ############################################
         # arg1 = time in [s]
         # arg2 = video id
+        # arg3 = category (A, B or C)
         ############################################
 
         video = CategorySummarization(sys.argv[2], int(sys.argv[1]))
-        video.summarize_A_category_video()
-    else:
+        if sys.argv[3] == "A":
+            video.summarize_A_category_video()
+        elif sys.argv[3] == "B":
+            video.summarize_B_category_video()
+        elif sys.argv[3] == "C":
+            video.summarize_C_category_video()
+    elif len(sys.argv) == 5:
         ############################################
         # arg1 = time in [s]
         # arg2 = video id
-        # arg3 = fps rate
+        # arg3 = category(A, B or C)
+        # arg4 = fps rate
         ############################################
 
         video = CategorySummarization(sys.argv[2], int(sys.argv[1]), int(sys.argv[3]))
-        video.prepare_recipe()
+        if sys.argv[3] == "A":
+            video.summarize_A_category_video()
+        elif sys.argv[3] == "B":
+            video.summarize_B_category_video()
+        elif sys.argv[3] == "C":
+            video.summarize_C_category_video()
