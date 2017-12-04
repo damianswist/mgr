@@ -1,14 +1,13 @@
 import sys
 
-from VideoSummarizationHandler.VideoSummarizationHandler import VideoSummarizationHandler
+
+from VideoSummarization.RandomSummarization import RandomSummarization
 
 if __name__ == "__main__":
 
     if len(sys.argv) < 3:
-       print("Error: Not enough arguments")
+        print("Error: Not enough arguments")
 
-       # video = VideoSummarizationHandler('1H7Y_vcI_6c', 60)
-       # video.prepare_random_summarization_recipe()
     elif len(sys.argv) == 3:
 
         ############################################
@@ -16,8 +15,8 @@ if __name__ == "__main__":
         # arg2 = video id
         ############################################
 
-        video = VideoSummarizationHandler(sys.argv[2], int(sys.argv[1]))
-        video.prepare_random_summarization_recipe()
+        video = RandomSummarization(sys.argv[2], int(sys.argv[1]))
+        video.summarize_video()
     elif len(sys.argv) == 4:
         ############################################
         # arg1 = time in [s]
@@ -25,5 +24,5 @@ if __name__ == "__main__":
         # arg3 fps rate
         ############################################
 
-        video = VideoSummarizationHandler(sys.argv[2], int(sys.argv[1]), int(sys.argv[3]))
-        video.prepare_random_summarization_recipe()
+        video = RandomSummarization(sys.argv[2], int(sys.argv[1]), int(sys.argv[3]))
+        video.summarize_video()
